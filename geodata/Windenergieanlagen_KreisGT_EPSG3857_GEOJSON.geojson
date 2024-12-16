@@ -1,0 +1,956 @@
+{
+	"type" : "FeatureCollection",
+	"name" : "Inside",
+	"features" : [
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3518083536, 51.8156925503 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2016",
+				"Typ" : "Enercon E-115",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149.08,
+				"Hoehe_Ges" : 206.93,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 455319,
+				"Hochwert" : 5740738,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2233962298, 51.8321961944 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2015",
+				"Typ" : "E-82-E2 - RheWie - WEA 3",
+				"Leistung" : 2300,
+				"Hoehe_Nabe" : 138.38,
+				"Hoehe_Ges" : 179.38,
+				"Durchm_Rot" : 82,
+				"Rechtswert" : 446487,
+				"Hochwert" : 5742660,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2263335456, 51.9942834986 ]
+			},
+			"properties" : {
+				"Status" : "im Bau / genehmigt",
+				"Baujahr" : null,
+				"Typ" : "E-160 - WP Kattenstrot - WEA 2",
+				"Leistung" : 5560,
+				"Hoehe_Nabe" : 166.6,
+				"Hoehe_Ges" : 246.6,
+				"Durchm_Rot" : 160,
+				"Rechtswert" : 446881,
+				"Hochwert" : 5760685,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2434913537, 52.1099751369 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2001",
+				"Typ" : "AN Bonus 1MW/54",
+				"Leistung" : 1000,
+				"Hoehe_Nabe" : 60,
+				"Hoehe_Ges" : 86,
+				"Durchm_Rot" : 54,
+				"Rechtswert" : 448193,
+				"Hochwert" : 5773540,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3458974017, 51.7700373885 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2022",
+				"Typ" : "Nordex N-163/5.X",
+				"Leistung" : 3700,
+				"Hoehe_Nabe" : 164,
+				"Hoehe_Ges" : 245.5,
+				"Durchm_Rot" : 163,
+				"Rechtswert" : 454866,
+				"Hochwert" : 5735664,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2908269805, 51.7606906284 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "Vestas V80",
+				"Leistung" : 2000,
+				"Hoehe_Nabe" : 100,
+				"Hoehe_Ges" : 140,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 451056,
+				"Hochwert" : 5734660,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3721948599, 51.8644642303 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "Enercon E-66/70",
+				"Leistung" : 1800,
+				"Hoehe_Nabe" : 100,
+				"Hoehe_Ges" : 133,
+				"Durchm_Rot" : 66,
+				"Rechtswert" : 456771,
+				"Hochwert" : 5746150,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2184897129, 51.8406515839 ]
+			},
+			"properties" : {
+				"Status" : "im Bau / genehmigt",
+				"Baujahr" : null,
+				"Typ" : "N163 6.8 MW STE - WP Aurea - WEA 1",
+				"Leistung" : 6800,
+				"Hoehe_Nabe" : 164,
+				"Hoehe_Ges" : 245.5,
+				"Durchm_Rot" : 163,
+				"Rechtswert" : 446159,
+				"Hochwert" : 5743604,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3370804065, 51.9620709923 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2000",
+				"Typ" : "Enercon E-66/18 70",
+				"Leistung" : 1800,
+				"Hoehe_Nabe" : 88,
+				"Hoehe_Ges" : 123,
+				"Durchm_Rot" : 70,
+				"Rechtswert" : 454452,
+				"Hochwert" : 5757027.19,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2959925786, 51.7564956798 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "Vestas V80",
+				"Leistung" : 2000,
+				"Hoehe_Nabe" : 100,
+				"Hoehe_Ges" : 140,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 451408,
+				"Hochwert" : 5734190,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3270439454, 51.8897049603 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2017",
+				"Typ" : "GE 2.5-120 - WP Gütersloh - WEA 1",
+				"Leistung" : 2500,
+				"Hoehe_Nabe" : 110,
+				"Hoehe_Ges" : 170,
+				"Durchm_Rot" : 120,
+				"Rechtswert" : 453688,
+				"Hochwert" : 5748985,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2762233458, 52.0003099998 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2007",
+				"Typ" : "RE power MD 77",
+				"Leistung" : 1500,
+				"Hoehe_Nabe" : 111.5,
+				"Hoehe_Ges" : 150,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 450313,
+				"Hochwert" : 5761320,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3814891192, 51.8200064019 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2004",
+				"Typ" : "NEG Micon NM 60",
+				"Leistung" : 1000,
+				"Hoehe_Nabe" : 70,
+				"Hoehe_Ges" : 99,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 457369,
+				"Hochwert" : 5741200,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.196004869, 52.0457344918 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "Enercon E-40",
+				"Leistung" : 600,
+				"Hoehe_Nabe" : 65,
+				"Hoehe_Ges" : 99,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 444862,
+				"Hochwert" : 5766430,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.1956761481, 52.0478002019 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "Enercon E-40",
+				"Leistung" : 600,
+				"Hoehe_Nabe" : 65,
+				"Hoehe_Ges" : 99,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 444842,
+				"Hochwert" : 5766660,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2268997705, 51.8471000381 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2023",
+				"Typ" : "Nordex N149 - Windrad Brock N149",
+				"Leistung" : 4500,
+				"Hoehe_Nabe" : 164,
+				"Hoehe_Ges" : 238.55,
+				"Durchm_Rot" : 149,
+				"Rechtswert" : 446746,
+				"Hochwert" : 5744315,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2057471613, 51.8248672158 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "E-115 (TES) - WP Ostwestfalen - WEA 1",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149,
+				"Hoehe_Ges" : 206.86,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 445262,
+				"Hochwert" : 5741858,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2210511879, 51.8509988736 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2016",
+				"Typ" : "Nordex N 117/2400 - WP Möhler",
+				"Leistung" : 2400,
+				"Hoehe_Nabe" : 120,
+				"Hoehe_Ges" : 178.5,
+				"Durchm_Rot" : 117,
+				"Rechtswert" : 446347.77,
+				"Hochwert" : 5744752.91,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2384434038, 51.8297590072 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "E-115 (TES) - WP Ostwestfalen - WEA 6",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149,
+				"Hoehe_Ges" : 206.86,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 447521,
+				"Hochwert" : 5742378,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3272705536, 51.8871797071 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2017",
+				"Typ" : "GE 2.5-120 - WP Gütersloh - WEA 2",
+				"Leistung" : 2500,
+				"Hoehe_Nabe" : 110,
+				"Hoehe_Ges" : 170,
+				"Durchm_Rot" : 120,
+				"Rechtswert" : 453701,
+				"Hochwert" : 5748704,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2355476707, 51.8413661017 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "E-115 (TES) - WP Ostwestfalen - WEA 5",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149,
+				"Hoehe_Ges" : 206.86,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 447335,
+				"Hochwert" : 5743671,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.1636729647, 51.975621068 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2021",
+				"Typ" : "vertikal",
+				"Leistung" : 30,
+				"Hoehe_Nabe" : null,
+				"Hoehe_Ges" : 7,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 442555,
+				"Hochwert" : 5758657,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.5032111938, 51.916681921 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2009",
+				"Typ" : "Vestas V90",
+				"Leistung" : 2000,
+				"Hoehe_Nabe" : 105,
+				"Hoehe_Ges" : 150,
+				"Durchm_Rot" : 90,
+				"Rechtswert" : 465832,
+				"Hochwert" : 5751888,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.4103551425, 51.8749117136 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2009",
+				"Typ" : "Nordex S 77",
+				"Leistung" : 1500,
+				"Hoehe_Nabe" : 100,
+				"Hoehe_Ges" : 139,
+				"Durchm_Rot" : 77,
+				"Rechtswert" : 459408,
+				"Hochwert" : 5747290,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.5011454428, 51.9194064988 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2009",
+				"Typ" : "Vestas V90",
+				"Leistung" : 2000,
+				"Hoehe_Nabe" : 105,
+				"Hoehe_Ges" : 150,
+				"Durchm_Rot" : 90,
+				"Rechtswert" : 465692,
+				"Hochwert" : 5752192,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2766602355, 51.9822404832 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2011",
+				"Typ" : "Enercon E 82 E2",
+				"Leistung" : 2300,
+				"Hoehe_Nabe" : 98,
+				"Hoehe_Ges" : 139,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 450323,
+				"Hochwert" : 5759310,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.4135475797, 51.8707017734 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "NEG Micon NM-750/48",
+				"Leistung" : 750,
+				"Hoehe_Nabe" : 72,
+				"Hoehe_Ges" : 96,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 459624,
+				"Hochwert" : 5746820,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3812203206, 51.8216234323 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2004",
+				"Typ" : "NEG Micon NM 60",
+				"Leistung" : 1000,
+				"Hoehe_Nabe" : 70,
+				"Hoehe_Ges" : 99,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 457352,
+				"Hochwert" : 5741380,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2119784078, 51.8245045171 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "E-115 (TES) - WP Ostwestfalen - WEA 2",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149,
+				"Hoehe_Ges" : 206.86,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 445691,
+				"Hochwert" : 5741813,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.4025270922, 51.9383322438 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2016",
+				"Typ" : null,
+				"Leistung" : 15,
+				"Hoehe_Nabe" : 32,
+				"Hoehe_Ges" : 37,
+				"Durchm_Rot" : 5,
+				"Rechtswert" : 458927,
+				"Hochwert" : 5754348,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2812538793, 51.9827181645 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2011",
+				"Typ" : "Enercon E 82 E2",
+				"Leistung" : 2300,
+				"Hoehe_Nabe" : 98,
+				"Hoehe_Ges" : 139,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 450639,
+				"Hochwert" : 5759360,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2947742811, 52.0100430177 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2006",
+				"Typ" : "Südwind S77",
+				"Leistung" : 1500,
+				"Hoehe_Nabe" : 97,
+				"Hoehe_Ges" : 135,
+				"Durchm_Rot" : 77,
+				"Rechtswert" : 451597,
+				"Hochwert" : 5762390,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.5308886545, 51.9242401526 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2017",
+				"Typ" : "Vestas V126-3.3 MW",
+				"Leistung" : 3300,
+				"Hoehe_Nabe" : 137,
+				"Hoehe_Ges" : 200,
+				"Durchm_Rot" : 126,
+				"Rechtswert" : 467741,
+				"Hochwert" : 5752716,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.5165956503, 51.9172951006 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2003",
+				"Typ" : "Enercon E6.44",
+				"Leistung" : 600,
+				"Hoehe_Nabe" : 65,
+				"Hoehe_Ges" : 99,
+				"Durchm_Rot" : 77.9,
+				"Rechtswert" : 466753,
+				"Hochwert" : 5751950,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3573634367, 51.8928340902 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "Mikro WEA",
+				"Leistung" : 30,
+				"Hoehe_Nabe" : null,
+				"Hoehe_Ges" : null,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 455777.6,
+				"Hochwert" : 5749314.17,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.4479638708, 52.0892798229 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2020",
+				"Typ" : "Vestas V126",
+				"Leistung" : 3450,
+				"Hoehe_Nabe" : 137,
+				"Hoehe_Ges" : 200,
+				"Durchm_Rot" : 126,
+				"Rechtswert" : 462178,
+				"Hochwert" : 5771112,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2297771913, 51.999008444 ]
+			},
+			"properties" : {
+				"Status" : "im Bau / genehmigt",
+				"Baujahr" : null,
+				"Typ" : "E-160 - WP-Kattenstrot - WEA 1",
+				"Leistung" : 5560,
+				"Hoehe_Nabe" : 166.6,
+				"Hoehe_Ges" : 246.6,
+				"Durchm_Rot" : 160,
+				"Rechtswert" : 447123,
+				"Hochwert" : 5761208,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2455101487, 51.8306587344 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "E-115 (TES) - WP Ostwestfalen - WEA 7",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149,
+				"Hoehe_Ges" : 206.86,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 448009,
+				"Hochwert" : 5742473,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3654308928, 52.0507696466 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2011",
+				"Typ" : "Triplr Blades WT 1 kW",
+				"Leistung" : 1,
+				"Hoehe_Nabe" : 8.47,
+				"Hoehe_Ges" : null,
+				"Durchm_Rot" : 1.72,
+				"Rechtswert" : 456486,
+				"Hochwert" : 5766875,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2819589999, 52.115160702 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2012",
+				"Typ" : "Enercon E 82 E2",
+				"Leistung" : 2300,
+				"Hoehe_Nabe" : 85,
+				"Hoehe_Ges" : 126,
+				"Durchm_Rot" : 82,
+				"Rechtswert" : 450833,
+				"Hochwert" : 5774090,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.4312728014, 52.1002503242 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2016",
+				"Typ" : "Enercon E-115",
+				"Leistung" : 3000,
+				"Hoehe_Nabe" : 149.08,
+				"Hoehe_Ges" : 206.94,
+				"Durchm_Rot" : 115.71,
+				"Rechtswert" : 461044,
+				"Hochwert" : 5772341,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.4305706976, 52.0785698039 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "1992",
+				"Typ" : "Aeroman",
+				"Leistung" : 30,
+				"Hoehe_Nabe" : 22,
+				"Hoehe_Ges" : 30,
+				"Durchm_Rot" : 148,
+				"Rechtswert" : 460977,
+				"Hochwert" : 5769930,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2238784251, 51.8353823356 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2015",
+				"Typ" : "E-82-E2 - RheWie -WEA 4",
+				"Leistung" : 2300,
+				"Hoehe_Nabe" : 138.38,
+				"Hoehe_Ges" : 179.38,
+				"Durchm_Rot" : 82,
+				"Rechtswert" : 446524,
+				"Hochwert" : 5743014,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.2410800545, 51.8334805075 ]
+			},
+			"properties" : {
+				"Status" : "im Bau / genehmigt",
+				"Baujahr" : null,
+				"Typ" : "N163 6.8 MW STE - WP Aurea - WEA 2",
+				"Leistung" : 6800,
+				"Hoehe_Nabe" : 164,
+				"Hoehe_Ges" : 245.5,
+				"Durchm_Rot" : 163,
+				"Rechtswert" : 447707,
+				"Hochwert" : 5742790,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3297557057, 51.8783554553 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2017",
+				"Typ" : "GE 2.5-120 - WP Gütersloh - WEA 3",
+				"Leistung" : 2500,
+				"Hoehe_Nabe" : 110,
+				"Hoehe_Ges" : 170,
+				"Durchm_Rot" : 120,
+				"Rechtswert" : 453863,
+				"Hochwert" : 5747721,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3004838085, 52.0101669703 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2006",
+				"Typ" : "Südwind S77",
+				"Leistung" : 1500,
+				"Hoehe_Nabe" : 97,
+				"Hoehe_Ges" : 135,
+				"Durchm_Rot" : 77,
+				"Rechtswert" : 451989,
+				"Hochwert" : 5762400,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.257382292, 52.0517117349 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2002",
+				"Typ" : "Enercon 66",
+				"Leistung" : 1800,
+				"Hoehe_Nabe" : 85,
+				"Hoehe_Ges" : 120,
+				"Durchm_Rot" : 70,
+				"Rechtswert" : 449078,
+				"Hochwert" : 5767050,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3349298747, 52.0758212399 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "1992",
+				"Typ" : "Tacke TW80",
+				"Leistung" : 80,
+				"Hoehe_Nabe" : 40,
+				"Hoehe_Ges" : 51,
+				"Durchm_Rot" : 21,
+				"Rechtswert" : 454420,
+				"Hochwert" : 5769680,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3840158885, 51.8198398359 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : "2004",
+				"Typ" : "NEG Micon NM 60",
+				"Leistung" : 1000,
+				"Hoehe_Nabe" : 70,
+				"Hoehe_Ges" : 99,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 457543,
+				"Hochwert" : 5741180,
+				"_clipped" : "no"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
+				"coordinates" : [ 8.3574586328, 51.892812941 ]
+			},
+			"properties" : {
+				"Status" : "in Betrieb",
+				"Baujahr" : null,
+				"Typ" : "Mikro WEA",
+				"Leistung" : 30,
+				"Hoehe_Nabe" : null,
+				"Hoehe_Ges" : null,
+				"Durchm_Rot" : null,
+				"Rechtswert" : 455784.13,
+				"Hochwert" : 5749311.76,
+				"_clipped" : "no"
+			}
+		}
+	]
+}
