@@ -113,7 +113,7 @@ services:
         restart: true
 
   portal-provider:
-    image: ghcr.io/connected-intelligent-systems/portal:develop
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
     ports:
       - "8085:8085"
     environment:
@@ -135,7 +135,7 @@ services:
       
 
   portal-consumer:
-    image: ghcr.io/connected-intelligent-systems/portal:develop
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
     ports:
       - "8086:8086"
     environment:
