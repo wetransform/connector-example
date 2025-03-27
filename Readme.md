@@ -38,3 +38,6 @@ In this deployment the PostgreSQL Database is by default configured to the contr
 
 ### Datasets - Nginx
 This example uses Nginx to serve datasets via HTTP to showcase how data can be made available over the EDC as an Asset. This is only used for demonstration purposes.
+
+### EDC communication visalization
+<img src="doc/images/edc_communication.png" alt="communcation" />
