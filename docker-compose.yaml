@@ -1,5 +1,57 @@
 version: "3.9"
 services:
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dataspace
+    image: bitnami/postgresql:17.2.0
+    ports:
+      - "5432:5432"
+    configs:
+      - source: postgres_init_sql
+        target: /docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10s
+      retries: 5
+
+  geodata:
+    image: nginx
+    ports:
+      - "8088:80"
+    volumes:
+      - ./geodata:/usr/share/nginx/html:ro
+    configs:
+      - source: geodata_nginx_config
+        target: /etc/nginx/nginx.conf
+    restart: always
+
+  keycloak:
+    image: bitnami/keycloak:23.0.3
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_DATABASE_VENDOR=dev-file
+      - KEYCLOAK_ADMIN_USER=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_EXTRA_ARGS='--import-realm'
+      - KEYCLOAK_ENABLE_HEALTH_ENDPOINTS=true
+    volumes:
+      - ./keycloak/realm-export-dataspace.json:/opt/bitnami/keycloak/data/import/dataspace-realm.json
+    healthcheck:
+        test: ["CMD-SHELL", "curl --fail http://localhost:8080/realms/dataspace/.well-known/openid-configuration"]
+        interval: 30s
+        timeout: 10s
+        start_interval: 30s
+        retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
 
   portal-provider:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -17,10 +69,10 @@ services:
     configs:
       - source: portal_config_js
         target: /app/public/config.js
-    # depends_on:
-    #   edc-provider:
-    #     condition: service_healthy
-    #     restart: true
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
 
 
   portal-consumer:
@@ -39,26 +91,10 @@ services:
     configs:
       - source: portal_config_js
         target: /app/public/config.js
-    # depends_on:
-    #   edc-consumer:
-    #     condition: service_healthy
-    #     restart: true
-
-  import-edc-provider-data:
-    image: alpine/curl
-    volumes:
-      - ./initialization/init.sh:/scripts/init.sh
-    working_dir: /scripts
-    environment:
-      - EDC_BASE_URL=http://host.docker.internal:19193
-    command: /scripts/init.sh
-    # depends_on:
-    #   edc-provider:
-    #     condition: service_healthy
-    #     restart: true
-    #   edc-consumer:
-    #     condition: service_healthy
-    #     restart: true
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
 
 configs:
   postgres_init_sql:

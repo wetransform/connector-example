@@ -1,5 +1,4 @@
 #!/bin/sh
-set -xo
 
 EDC_BASE_URL="${EDC_BASE_URL:-http://localhost:8081}"
 
