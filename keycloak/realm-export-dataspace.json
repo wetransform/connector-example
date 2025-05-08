@@ -686,7 +686,7 @@
         "id.token.claim" : "false",
         "access.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "included.custom.audience" : "http://host.docker.internal:8080/realms/dataspace",
         "userinfo.token.claim" : "false"
       }
     }, {
@@ -837,7 +837,7 @@
         "id.token.claim" : "false",
         "access.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "included.custom.audience" : "http://host.docker.internal:8080/realms/dataspace",
         "userinfo.token.claim" : "false"
       }
     }, {

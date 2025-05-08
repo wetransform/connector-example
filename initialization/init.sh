@@ -1,4 +1,5 @@
 #!/bin/sh
+set -xo
 
 EDC_BASE_URL="${EDC_BASE_URL:-http://localhost:8081}"
 
@@ -110,7 +111,7 @@ ASSET_COUNT=2
 
 ASSET_ID_1="77e9fbfd-7e9a-4254-96c7-d06595728402"
 ASSET_NAME_1="Countries"
-ASSET_URL_1="http://geodata/countries.geojson"
+ASSET_URL_1="http://host.docker.internal:8088/countries.geojson"
 ASSET_DESCRIPTION_1="Tolle Description hier"
 ASSET_ACTIVE_1=true
 POLICY_ID_1="7f09aa3f-9cb6-437a-b29e-3281601bdad7"
@@ -118,7 +119,7 @@ CONTRACT_DEFINITION_ID_1="a7741ae6-bc6e-436e-a5f8-788153b94042"
 
 ASSET_ID_2="554468b1-f28b-4c1c-990c-d2dab2f2a432"
 ASSET_NAME_2="Windenergieanlagen"
-ASSET_URL_2="http://geodata/Windenergieanlagen_KreisGT_EPSG3857_GEOJSON.geojson"
+ASSET_URL_2="http://host.docker.internal:8088/Windenergieanlagen_KreisGT_EPSG3857_GEOJSON.geojson"
 ASSET_DESCRIPTION_2="Tolle Description hier"
 ASSET_ACTIVE_2=true
 POLICY_ID_2="de35267a-f4f4-4cea-a994-3741fd02ac71"

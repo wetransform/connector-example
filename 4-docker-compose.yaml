@@ -1,0 +1,119 @@
+version: "3.9"
+services:
+
+  portal-provider:
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
+    ports:
+      - "8085:8085"
+    environment:
+      EDC_URL: http://host.docker.internal:19193/management
+      FEDERATED_CATALOG_URL: http://host.docker.internal:19199/catalog
+      PORT: 8085
+      DEFAULT_USER_ID: company1
+      DEFAULT_USER_FULL_NAME: Company 1
+      DEFAULT_USER_EMAIL: admin@company1.local
+      DEFAULT_USER_TENANT_ID: default
+      DEFAULT_USER_ROLES: admin
+    configs:
+      - source: portal_config_js
+        target: /app/public/config.js
+    # depends_on:
+    #   edc-provider:
+    #     condition: service_healthy
+    #     restart: true
+
+
+  portal-consumer:
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
+    ports:
+      - "8086:8086"
+    environment:
+      EDC_URL: http://host.docker.internal:29193/management
+      FEDERATED_CATALOG_URL: http://host.docker.internal:29199/catalog
+      PORT: 8086
+      DEFAULT_USER_ID: company2
+      DEFAULT_USER_FULL_NAME: Company 2
+      DEFAULT_USER_EMAIL: admin@company2.local
+      DEFAULT_USER_TENANT_ID: default
+      DEFAULT_USER_ROLES: admin
+    configs:
+      - source: portal_config_js
+        target: /app/public/config.js
+    # depends_on:
+    #   edc-consumer:
+    #     condition: service_healthy
+    #     restart: true
+
+  import-edc-provider-data:
+    image: alpine/curl
+    volumes:
+      - ./initialization/init.sh:/scripts/init.sh
+    working_dir: /scripts
+    environment:
+      - EDC_BASE_URL=http://host.docker.internal:19193
+    command: /scripts/init.sh
+    # depends_on:
+    #   edc-provider:
+    #     condition: service_healthy
+    #     restart: true
+    #   edc-consumer:
+    #     condition: service_healthy
+    #     restart: true
+
+configs:
+  postgres_init_sql:
+    content: |
+      CREATE SCHEMA IF NOT EXISTS consumer;
+      CREATE SCHEMA IF NOT EXISTS provider;
+  portal_config_js:
+    content: |
+      var config = {
+        showDevices: ${PORTAL_FRONTEND_SHOW_DEVICES-false},
+        showThingDescriptions: ${PORTAL_FRONTEND_SHOW_THING_DESCRIPTIONS-false},
+        showQuery: ${PORTAL_FRONTEND_SHOW_QUERY-false},
+        showCustomers: ${PORTAL_FRONTEND_SHOW_CUSTOMERS-false},
+        showAssets: ${PORTAL_FRONTEND_SHOW_ASSETS-true},
+        showPolicies: ${PORTAL_FRONTEND_SHOW_POLICIES-true},
+        showContractDefinitions: ${PORTAL_FRONTEND_SHOW_CONTRACT_DEFINITIONS-true},
+        showCatalog: ${PORTAL_FRONTEND_SHOW_CATALOG-true},
+        showFederatedCatalog: ${PORTAL_FRONTEND_SHOW_FEDERATED_CATALOG-true},
+        showContractAgreements: ${PORTAL_FRONTEND_SHOW_CONTRACT_AGREEMENTS-true},
+        showTransferProcesses: ${PORTAL_FRONTEND_SHOW_TRANSFER_PROCESSES-true},
+        showThingsboard: ${PORTAL_FRONTEND_SHOW_THINGSBOARD-false},
+        showKeycloak: ${PORTAL_FRONTEND_SHOW_KEYCLOAK-false}
+      }
+  geodata_nginx_config:
+    content: |
+      worker_processes 1;
+
+      events {
+          worker_connections 1024;
+      }
+
+      http {
+          include       mime.types;
+          default_type  application/octet-stream;
+
+          server {
+              listen 80;
+              server_name localhost;
+
+              root /usr/share/nginx/html;
+              index index.html;
+
+              location ~ \.json$ {
+                  default_type application/json;
+              }
+
+              location ~ \.geojson$ {
+                  default_type application/json;
+              }
+
+              location / {
+                  autoindex on;
+                  autoindex_format json;
+              }
+
+              error_page 404 /404.html;
+          }
+      }
