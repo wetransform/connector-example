@@ -1,0 +1,169 @@
+services:
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dataspace
+    image: bitnami/postgresql:17.2.0
+    ports:
+      - "5432:5432"
+    configs:
+      - source: postgres_init_sql
+        target: /docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10s
+      retries: 5
+
+  geodata:
+    image: nginx
+    ports:
+      - "8088:80"
+    volumes:
+      - ./geodata:/usr/share/nginx/html:ro
+    configs:
+      - source: geodata_nginx_config
+        target: /etc/nginx/nginx.conf
+    restart: always
+
+  mitm:
+    image: mitmproxy/mitmproxy:latest
+    command: mitmweb --web-host 0.0.0.0 --web-port 9081 --set web_password='edc-mitm' --mode reverse:http://host.docker.internal:19291@39291 --mode reverse:http://host.docker.internal:19193@39193 --mode reverse:http://host.docker.internal:19194@39194 --mode reverse:http://host.docker.internal:19199@39199 --mode reverse:http://host.docker.internal:29291@49291 --mode reverse:http://host.docker.internal:29193@49193 --mode reverse:http://host.docker.internal:29194@49194 --mode reverse:http://host.docker.internal:29199@49199
+    ports:
+      - "9081:9081"
+      - "39291:39291"
+      - "39193:39193"
+      - "39194:39194"
+      - "39199:39199"
+      - "49291:49291"
+      - "49193:49193"
+      - "49194:49194"
+      - "49199:49199"
+
+
+  keycloak:
+    image: bitnami/keycloak:23.0.3
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_DATABASE_VENDOR=dev-file
+      - KEYCLOAK_ADMIN_USER=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_EXTRA_ARGS='--import-realm'
+      - KEYCLOAK_ENABLE_HEALTH_ENDPOINTS=true
+    volumes:
+      - ./keycloak/realm-export-dataspace.json:/opt/bitnami/keycloak/data/import/dataspace-realm.json
+    healthcheck:
+        test: ["CMD-SHELL", "curl --fail http://localhost:8080/realms/dataspace/.well-known/openid-configuration"]
+        interval: 30s
+        timeout: 10s
+        start_interval: 30s
+        retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+
+  portal-provider:
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
+    ports:
+      - "8085:8085"
+    environment:
+      EDC_URL: http://host.docker.internal:39193/management
+      FEDERATED_CATALOG_URL: http://host.docker.internal:39199/catalog
+      PORT: 8085
+      DEFAULT_USER_ID: company1
+      DEFAULT_USER_FULL_NAME: Company 1
+      DEFAULT_USER_EMAIL: admin@company1.local
+      DEFAULT_USER_TENANT_ID: default
+      DEFAULT_USER_ROLES: admin
+    configs:
+      - source: portal_config_js
+        target: /app/public/config.js
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
+
+
+  portal-consumer:
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
+    ports:
+      - "8086:8086"
+    environment:
+      EDC_URL: http://host.docker.internal:49193/management
+      FEDERATED_CATALOG_URL: http://host.docker.internal:49199/catalog
+      PORT: 8086
+      DEFAULT_USER_ID: company2
+      DEFAULT_USER_FULL_NAME: Company 2
+      DEFAULT_USER_EMAIL: admin@company2.local
+      DEFAULT_USER_TENANT_ID: default
+      DEFAULT_USER_ROLES: admin
+    configs:
+      - source: portal_config_js
+        target: /app/public/config.js
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
+
+configs:
+  postgres_init_sql:
+    content: |
+      CREATE SCHEMA IF NOT EXISTS consumer;
+      CREATE SCHEMA IF NOT EXISTS provider;
+  portal_config_js:
+    content: |
+      var config = {
+        showDevices: ${PORTAL_FRONTEND_SHOW_DEVICES-false},
+        showThingDescriptions: ${PORTAL_FRONTEND_SHOW_THING_DESCRIPTIONS-false},
+        showQuery: ${PORTAL_FRONTEND_SHOW_QUERY-false},
+        showCustomers: ${PORTAL_FRONTEND_SHOW_CUSTOMERS-false},
+        showAssets: ${PORTAL_FRONTEND_SHOW_ASSETS-true},
+        showPolicies: ${PORTAL_FRONTEND_SHOW_POLICIES-true},
+        showContractDefinitions: ${PORTAL_FRONTEND_SHOW_CONTRACT_DEFINITIONS-true},
+        showCatalog: ${PORTAL_FRONTEND_SHOW_CATALOG-true},
+        showFederatedCatalog: ${PORTAL_FRONTEND_SHOW_FEDERATED_CATALOG-true},
+        showContractAgreements: ${PORTAL_FRONTEND_SHOW_CONTRACT_AGREEMENTS-true},
+        showTransferProcesses: ${PORTAL_FRONTEND_SHOW_TRANSFER_PROCESSES-true},
+        showThingsboard: ${PORTAL_FRONTEND_SHOW_THINGSBOARD-false},
+        showKeycloak: ${PORTAL_FRONTEND_SHOW_KEYCLOAK-false}
+      }
+  geodata_nginx_config:
+    content: |
+      worker_processes 1;
+
+      events {
+          worker_connections 1024;
+      }
+
+      http {
+          include       mime.types;
+          default_type  application/octet-stream;
+
+          server {
+              listen 80;
+              server_name localhost;
+
+              root /usr/share/nginx/html;
+              index index.html;
+
+              location ~ \.json$ {
+                  default_type application/json;
+              }
+
+              location ~ \.geojson$ {
+                  default_type application/json;
+              }
+
+              location / {
+                  autoindex on;
+                  autoindex_format json;
+              }
+
+              error_page 404 /404.html;
+          }
+      }

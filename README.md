@@ -18,8 +18,8 @@ Setting up the development environment includes four steps: cloning the reposito
       ```
       EDC_AGENT_IDENTITY_KEY=participant_id;EDC_DATAPLANE_API_PUBLIC_BASEURL=http://host.docker.internal:29291/public;EDC_DATASOURCE_DEFAULT_PASSWORD=postgres;EDC_DATASOURCE_DEFAULT_URL=jdbc:postgresql://host.docker.internal:5432/dataspace?currentSchema=consumer;EDC_DATASOURCE_DEFAULT_USER=user;EDC_DSP_CALLBACK_ADDRESS=http://host.docker.internal:29194/protocol;EDC_NODES_FILE_PATH=/Users/moritz/connector-example/edc/nodes.properties;EDC_OAUTH_CERTIFICATE_ALIAS=public-key;EDC_OAUTH_CLIENT_ID=edc-consumer;EDC_OAUTH_PRIVATE_KEY_ALIAS=private-key;EDC_OAUTH_PROVIDER_AUDIENCE=http://host.docker.internal:8080/realms/dataspace;EDC_OAUTH_PROVIDER_JWKS_URL=http://host.docker.internal:8080/realms/dataspace/protocol/openid-connect/certs;EDC_OAUTH_TOKEN_URL=http://host.docker.internal:8080/realms/dataspace/protocol/openid-connect/token;EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY=5;EDC_OAUTH_VALIDATION_NBF_LEEWAY=20;EDC_PARTICIPANT_ID=company2;EDC_PUBLIC_KEY_ALIAS=public-key;EDC_SQL_SCHEMA_AUTOCREATE=true;EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS=private-key;EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS=public-key;EDC_VAULT_FILE_PATH=/Users/moritz/connector-example/edc/vault.properties;LOG_LEVEL=info;WEB_HTTP_CATALOG_PATH=/catalog;WEB_HTTP_CATALOG_PORT=29199;WEB_HTTP_CONTROL_PATH=/control;WEB_HTTP_CONTROL_PORT=29192;WEB_HTTP_MANAGEMENT_PATH=/management;WEB_HTTP_MANAGEMENT_PORT=29193;WEB_HTTP_PATH=/api;WEB_HTTP_PORT=29191;WEB_HTTP_PROTOCOL_PATH=/protocol;WEB_HTTP_PROTOCOL_PORT=29194;WEB_HTTP_PUBLIC_PATH=/public;WEB_HTTP_PUBLIC_PORT=29291
       ```
-4. In `connector-example`, run `docker compose up -d`. After the services are started up, start the connectors. Therefore run both, `edc-provider` and `edc-consumer` in your IDE in parallel.
-5. To add the initial data sets to your setup, run in the `connector-example`-directory following: `EDC_BASE_URL=http://host.docker.internal:19193 ./initialization/init.sh` (This step is only necessary at the initial installation.)
+3. In `connector-example`, run `docker compose up -d`. After the services are started up, start the connectors. Therefore run both, `edc-provider` and `edc-consumer` in your IDE in parallel.
+4. To add the initial data sets to your setup, run in the `connector-example`-directory following: `EDC_BASE_URL=http://host.docker.internal:19193 ./initialization/init.sh` (This step is only necessary at the initial installation.)
 
 Ressources available at:
 - EDC provider API: [http://localhost:19191/api](http://localhost:19191/api)
@@ -28,6 +28,36 @@ Ressources available at:
 - Portal consumer: [http://localhost:8086](http://localhost:8086)
 - Keycloak: [http://localhost:8080](http://localhost:8080)
 - Datasets Nginx: [http://localhost:8088](http://localhost:8088)
+
+### Man in the middle
+
+To track the traffic between the components for protocol debugging, there is also a mitm configuration available.
+Therefore, follow theses steps (assuming you alredy cloned the repositories):
+
+1. Open the connector with your IDE and add two **Gradle** Run/Debug Configurations with their respective environments:
+   1. Name: `edc-provider (mitm)`, Run: `:launchers:connector:runShadow --info`, Gradle project: `connector`, Environment variables:
+      ```
+      EDC_AGENT_IDENTITY_KEY=participant_id;EDC_DATAPLANE_API_PUBLIC_BASEURL=http://host.docker.internal:39291/public;EDC_DATASOURCE_DEFAULT_PASSWORD=postgres;EDC_DATASOURCE_DEFAULT_URL=jdbc:postgresql://host.docker.internal:5432/dataspace?currentSchema=provider;EDC_DATASOURCE_DEFAULT_USER=user;EDC_DSP_CALLBACK_ADDRESS=http://host.docker.internal:39194/protocol;EDC_NODES_FILE_PATH=/Users/moritz/connector-example/edc/mitm-nodes.properties;EDC_OAUTH_CERTIFICATE_ALIAS=public-key;EDC_OAUTH_CLIENT_ID=edc-provider;EDC_OAUTH_PRIVATE_KEY_ALIAS=private-key;EDC_OAUTH_PROVIDER_AUDIENCE=http://host.docker.internal:8080/realms/dataspace;EDC_OAUTH_PROVIDER_JWKS_URL=http://host.docker.internal:8080/realms/dataspace/protocol/openid-connect/certs;EDC_OAUTH_TOKEN_URL=http://host.docker.internal:8080/realms/dataspace/protocol/openid-connect/token;EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY=5;EDC_OAUTH_VALIDATION_NBF_LEEWAY=20;EDC_PARTICIPANT_ID=company1;EDC_PUBLIC_KEY_ALIAS=public-key;EDC_SQL_SCHEMA_AUTOCREATE=true;EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS=private-key;EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS=public-key;EDC_VAULT_FILE_PATH=/Users/moritz/connector-example/edc/vault.properties;LOG_LEVEL=info;WEB_HTTP_CATALOG_PATH=/catalog;WEB_HTTP_CATALOG_PORT=19199;WEB_HTTP_CONTROL_PATH=/control;WEB_HTTP_CONTROL_PORT=19192;WEB_HTTP_MANAGEMENT_PATH=/management;WEB_HTTP_MANAGEMENT_PORT=19193;WEB_HTTP_PATH=/api;WEB_HTTP_PORT=19191;WEB_HTTP_PROTOCOL_PATH=/protocol;WEB_HTTP_PROTOCOL_PORT=19194;WEB_HTTP_PUBLIC_PATH=/public;WEB_HTTP_PUBLIC_PORT=19291
+      ```
+   2. Name: `edc-consumer (mitm)`, Run: `:launchers:connector:runShadow --info`, Gradle project: `connector`, Environment variables:
+      ```
+      EDC_AGENT_IDENTITY_KEY=participant_id;EDC_DATAPLANE_API_PUBLIC_BASEURL=http://host.docker.internal:49291/public;EDC_DATASOURCE_DEFAULT_PASSWORD=postgres;EDC_DATASOURCE_DEFAULT_URL=jdbc:postgresql://host.docker.internal:5432/dataspace?currentSchema=consumer;EDC_DATASOURCE_DEFAULT_USER=user;EDC_DSP_CALLBACK_ADDRESS=http://host.docker.internal:49194/protocol;EDC_NODES_FILE_PATH=/Users/moritz/connector-example/edc/mitm-nodes.properties;EDC_OAUTH_CERTIFICATE_ALIAS=public-key;EDC_OAUTH_CLIENT_ID=edc-consumer;EDC_OAUTH_PRIVATE_KEY_ALIAS=private-key;EDC_OAUTH_PROVIDER_AUDIENCE=http://host.docker.internal:8080/realms/dataspace;EDC_OAUTH_PROVIDER_JWKS_URL=http://host.docker.internal:8080/realms/dataspace/protocol/openid-connect/certs;EDC_OAUTH_TOKEN_URL=http://host.docker.internal:8080/realms/dataspace/protocol/openid-connect/token;EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY=5;EDC_OAUTH_VALIDATION_NBF_LEEWAY=20;EDC_PARTICIPANT_ID=company2;EDC_PUBLIC_KEY_ALIAS=public-key;EDC_SQL_SCHEMA_AUTOCREATE=true;EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS=private-key;EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS=public-key;EDC_VAULT_FILE_PATH=/Users/moritz/connector-example/edc/vault.properties;LOG_LEVEL=info;WEB_HTTP_CATALOG_PATH=/catalog;WEB_HTTP_CATALOG_PORT=29199;WEB_HTTP_CONTROL_PATH=/control;WEB_HTTP_CONTROL_PORT=29192;WEB_HTTP_MANAGEMENT_PATH=/management;WEB_HTTP_MANAGEMENT_PORT=29193;WEB_HTTP_PATH=/api;WEB_HTTP_PORT=29191;WEB_HTTP_PROTOCOL_PATH=/protocol;WEB_HTTP_PROTOCOL_PORT=29194;WEB_HTTP_PUBLIC_PATH=/public;WEB_HTTP_PUBLIC_PORT=29291
+      ```
+2. In `connector-example`, run `docker compose -f mitm-docker-compose.yaml up -d`. After the services are started up, start the connectors. Therefore run both, `edc-provider (mitm)` and `edc-consumer (mitm)` in your IDE in parallel. The mitm web interface is now available at [http://localhost:9081/?token=edc-mitm](http://localhost:9081/?token=edc-mitm).
+3. If not done already, add the initial data sets to your setup, run in the `connector-example`-directory following: `EDC_BASE_URL=http://host.docker.internal:39193 ./initialization/init.sh` (This step is only necessary at the initial installation.) This request should also show up in the mitm web interface.
+
+The ports are still the same as without the mitm-proxy, however, following port mappings were added which run through the proxy so traffic between the conntectors and between the connector and the portal is intercepted:
+
+| mitm port | mapped to |
+|-----------|-----------|
+| 39291     | 19291     |
+| 39193     | 19193     |
+| 39194     | 19194     |
+| 39199     | 19199     |
+| 49291     | 29291     |
+| 49291     | 29193     |
+| 49291     | 29194     |
+| 49291     | 29199     |
 
 ## Components
 ### Keycloak
