@@ -1,12 +1,13 @@
 version: "3.9"
 services:
-  edc-provider:
-    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
+  forest-owner-a:
+#    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
+    image: wetransform/connector:latest
     ports:
       - 19191:19191 # health check
       # - 19192:19192
       - 19193:19193 # management endpoint
-      # - 19194:19194 # ds protocol (normaly forwarded, but edcs are in same network)
+      - 19194:19194 # ds protocol (normaly forwarded, but edcs are in same network)
       - 19291:19291 # public endpoint
       - 19199:19199 # federated catalog endpoint
     volumes:
@@ -14,8 +15,8 @@ services:
       - ./edc/nodes.properties:/resources/nodes.properties
     environment:
       EDC_VAULT_FILE_PATH: /resources/vault.properties
-      EDC_DSP_CALLBACK_ADDRESS: http://edc-provider:19194/protocol
-      EDC_DATAPLANE_API_PUBLIC_BASEURL: http://edc-provider:19291/public
+      EDC_DSP_CALLBACK_ADDRESS: http://forest-owner-a:19194/protocol
+      EDC_DATAPLANE_API_PUBLIC_BASEURL: http://forest-owner-a:19291/public
       WEB_HTTP_PORT: 19191
       WEB_HTTP_PATH: /api
       WEB_HTTP_MANAGEMENT_PORT: 19193
@@ -31,7 +32,7 @@ services:
       WEB_HTTP_PUBLIC_PATH: /public
       WEB_HTTP_CONTROL_PORT: 19192
       WEB_HTTP_CONTROL_PATH: /control
-      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=provider
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownera
       EDC_DATASOURCE_DEFAULT_USER: user
       EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
       EDC_SQL_SCHEMA_AUTOCREATE: true
@@ -39,15 +40,163 @@ services:
       EDC_OAUTH_PROVIDER_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
       EDC_OAUTH_CERTIFICATE_ALIAS: public-key
       EDC_OAUTH_PRIVATE_KEY_ALIAS: private-key
-      EDC_OAUTH_CLIENT_ID: edc-provider
+      EDC_OAUTH_CLIENT_ID: forest-owner-a
       EDC_OAUTH_PROVIDER_AUDIENCE: http://keycloak:8080/realms/dataspace
       EDC_OAUTH_VALIDATION_NBF_LEEWAY: 20
       EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY: 5
       EDC_AGENT_IDENTITY_KEY: participant_id
-      EDC_PARTICIPANT_ID: company1
+      EDC_PARTICIPANT_ID: company-forest-owner-a
       EDC_NODES_FILE_PATH: /resources/nodes.properties
+      EDC_OAUTH2_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH2_ISSUER: http://keycloak:8080/realms/dataspace
+      EDC_API_AUTH_TYPE: oauth2
+      EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
+      EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
+#      EDC_WEB_CORS_ENABLED: true
+#      EDC_WEB_CORS_ALLOWED_ORIGINS: http://localhost:8081
+#      EDC_WEB_CORS_ALLOWED_METHODS: GET,POST,OPTIONS
+#      EDC_WEB_CORS_ALLOWED_HEADERS: Authorization,Content-Type,X-Api-Key
+
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:19191/api/check/health"]
+      interval: 20s
+      timeout: 20s
+      retries: 5
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
+#    networks:
+#      - connector-example-network
+
+  forest-owner-b:
+#    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
+    image: wetransform/connector:latest
+    ports:
+      - 29191:29191 # health check
+      # - 29192:19192
+      - 29193:29193 # management endpoint
+      - 29194:29194 # ds protocol (normaly forwarded, but edcs are in same network)
+      - 29291:29291 # public endpoint
+      - 29199:29199 # federated catalog endpoint
+    volumes:
+      - ./edc/vault.properties:/resources/vault.properties
+      - ./edc/nodes.properties:/resources/nodes.properties
+    environment:
+      EDC_VAULT_FILE_PATH: /resources/vault.properties
+      EDC_DSP_CALLBACK_ADDRESS: http://forest-owner-b:29194/protocol
+      EDC_DATAPLANE_API_PUBLIC_BASEURL: http://forest-owner-b:29291/public
+      WEB_HTTP_PORT: 29191
+      WEB_HTTP_PATH: /api
+      WEB_HTTP_MANAGEMENT_PORT: 29193
+      WEB_HTTP_MANAGEMENT_PATH: /management
+      WEB_HTTP_PROTOCOL_PORT: 29194
+      WEB_HTTP_PROTOCOL_PATH: /protocol
+      WEB_HTTP_CATALOG_PORT: 29199
+      WEB_HTTP_CATALOG_PATH: /catalog
+      EDC_PUBLIC_KEY_ALIAS: public-key
+      EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS: private-key
+      EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS: public-key
+      WEB_HTTP_PUBLIC_PORT: 29291
+      WEB_HTTP_PUBLIC_PATH: /public
+      WEB_HTTP_CONTROL_PORT: 29192
+      WEB_HTTP_CONTROL_PATH: /control
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownerb
+      EDC_DATASOURCE_DEFAULT_USER: user
+      EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
+      EDC_SQL_SCHEMA_AUTOCREATE: true
+      EDC_OAUTH_TOKEN_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/token
+      EDC_OAUTH_PROVIDER_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH_CERTIFICATE_ALIAS: public-key
+      EDC_OAUTH_PRIVATE_KEY_ALIAS: private-key
+      EDC_OAUTH_CLIENT_ID: forest-owner-b
+      EDC_OAUTH_PROVIDER_AUDIENCE: http://keycloak:8080/realms/dataspace
+      EDC_OAUTH_VALIDATION_NBF_LEEWAY: 20
+      EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY: 5
+      EDC_AGENT_IDENTITY_KEY: participant_id
+      EDC_PARTICIPANT_ID: company-forest-owner-b
+      EDC_NODES_FILE_PATH: /resources/nodes.properties
+      EDC_OAUTH2_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH2_ISSUER: http://keycloak:8080/realms/dataspace
+      EDC_API_AUTH_TYPE: oauth2
+      EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
+      EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:29191/api/check/health"]
+      interval: 20s
+      timeout: 20s
+      retries: 5
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
+#    networks:
+#      - connector-example-network
+
+
+  forest-inventory-researcher:
+    #    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
+    image: wetransform/connector:latest
+    ports:
+      - 39191:39191 # health check
+      # - 19192:19192
+      - 39193:39193 # management endpoint
+      - 39194:39194 # ds protocol (normaly forwarded, but edcs are in same network)
+      - 39291:39291 # public endpoint
+      - 39199:39199 # federated catalog endpoint
+    volumes:
+      - ./edc/vault.properties:/resources/vault.properties
+      - ./edc/nodes.properties:/resources/nodes.properties
+    environment:
+      EDC_VAULT_FILE_PATH: /resources/vault.properties
+      EDC_DSP_CALLBACK_ADDRESS: http://forest-inventory-researcher:39194/protocol
+      EDC_DATAPLANE_API_PUBLIC_BASEURL: http://forest-inventory-researcher:39291/public
+      WEB_HTTP_PORT: 39191
+      WEB_HTTP_PATH: /api
+      WEB_HTTP_MANAGEMENT_PORT: 39193
+      WEB_HTTP_MANAGEMENT_PATH: /management
+      WEB_HTTP_PROTOCOL_PORT: 39194
+      WEB_HTTP_PROTOCOL_PATH: /protocol
+      WEB_HTTP_CATALOG_PORT: 39199
+      WEB_HTTP_CATALOG_PATH: /catalog
+      EDC_PUBLIC_KEY_ALIAS: public-key
+      EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS: private-key
+      EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS: public-key
+      WEB_HTTP_PUBLIC_PORT: 39291
+      WEB_HTTP_PUBLIC_PATH: /public
+      WEB_HTTP_CONTROL_PORT: 39192
+      WEB_HTTP_CONTROL_PATH: /control
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=inventoryresearcher
+      EDC_DATASOURCE_DEFAULT_USER: user
+      EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
+      EDC_SQL_SCHEMA_AUTOCREATE: true
+      EDC_OAUTH_TOKEN_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/token
+      EDC_OAUTH_PROVIDER_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH_CERTIFICATE_ALIAS: public-key
+      EDC_OAUTH_PRIVATE_KEY_ALIAS: private-key
+      EDC_OAUTH_CLIENT_ID: forest-inventory-researcher
+      EDC_OAUTH_PROVIDER_AUDIENCE: http://keycloak:8080/realms/dataspace
+      EDC_OAUTH_VALIDATION_NBF_LEEWAY: 20
+      EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY: 5
+      EDC_AGENT_IDENTITY_KEY: participant_id
+      EDC_PARTICIPANT_ID: company-forest-inventory-researcher
+      EDC_NODES_FILE_PATH: /resources/nodes.properties
+      EDC_OAUTH2_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH2_ISSUER: http://keycloak:8080/realms/dataspace
+      EDC_API_AUTH_TYPE: oauth2
+      EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
+      EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
+      LOGGING_LEVEL_ORG_ECLIPSE_EDC: DEBUG
+    #      EDC_WEB_CORS_ENABLED: true
+    #      EDC_WEB_CORS_ALLOWED_ORIGINS: http://localhost:8081
+    #      EDC_WEB_CORS_ALLOWED_METHODS: GET,POST,OPTIONS
+    #      EDC_WEB_CORS_ALLOWED_HEADERS: Authorization,Content-Type,X-Api-Key
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:59191/api/check/health" ]
       interval: 20s
       timeout: 20s
       retries: 5
@@ -56,82 +205,29 @@ services:
         condition: service_healthy
         restart: true
 
-  edc-consumer:
-    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
-    ports:
-      - 29191:19191 # health check
-      # - 29192:19192
-      - 29193:19193 # management endpoint
-      # - 29194:19194 # ds protocol (normaly forwarded, but edcs are in same network)
-      - 29291:19291 # public endpoint
-      - 29199:19199 # federated catalog endpoint
-    volumes:
-      - ./edc/vault.properties:/resources/vault.properties
-      - ./edc/nodes.properties:/resources/nodes.properties
-    environment:
-      EDC_VAULT_FILE_PATH: /resources/vault.properties
-      EDC_DSP_CALLBACK_ADDRESS: http://edc-consumer:19194/protocol
-      EDC_DATAPLANE_API_PUBLIC_BASEURL: http://edc-consumer:19291/public
-      WEB_HTTP_PORT: 19191
-      WEB_HTTP_PATH: /api
-      WEB_HTTP_MANAGEMENT_PORT: 19193
-      WEB_HTTP_MANAGEMENT_PATH: /management
-      WEB_HTTP_PROTOCOL_PORT: 19194
-      WEB_HTTP_PROTOCOL_PATH: /protocol
-      WEB_HTTP_CATALOG_PORT: 19199
-      WEB_HTTP_CATALOG_PATH: /catalog
-      EDC_PUBLIC_KEY_ALIAS: public-key
-      EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS: private-key
-      EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS: public-key
-      WEB_HTTP_PUBLIC_PORT: 19291
-      WEB_HTTP_PUBLIC_PATH: /public
-      WEB_HTTP_CONTROL_PORT: 19192
-      WEB_HTTP_CONTROL_PATH: /control
-      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=consumer
-      EDC_DATASOURCE_DEFAULT_USER: user
-      EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
-      EDC_SQL_SCHEMA_AUTOCREATE: true
-      EDC_OAUTH_TOKEN_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/token
-      EDC_OAUTH_PROVIDER_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
-      EDC_OAUTH_CERTIFICATE_ALIAS: public-key
-      EDC_OAUTH_PRIVATE_KEY_ALIAS: private-key
-      EDC_OAUTH_CLIENT_ID: edc-consumer
-      EDC_OAUTH_PROVIDER_AUDIENCE: http://keycloak:8080/realms/dataspace
-      EDC_OAUTH_VALIDATION_NBF_LEEWAY: 20
-      EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY: 5
-      EDC_AGENT_IDENTITY_KEY: participant_id
-      EDC_PARTICIPANT_ID: company2
-      EDC_NODES_FILE_PATH: /resources/nodes.properties
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:19191/api/check/health"]
-      interval: 20s
-      timeout: 20s
-      retries: 5
-    depends_on:
-      keycloak:
-        condition: service_healthy
-        restart: true
 
   portal-provider:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
     ports:
       - "8085:8085"
     environment:
-      EDC_URL: http://edc-provider:19193/management
-      FEDERATED_CATALOG_URL: http://edc-provider:19199/catalog
+      EDC_URL: http://forest-owner-a:19193/management
+      FEDERATED_CATALOG_URL: http://forest-owner-a:19199/catalog
       PORT: 8085
-      DEFAULT_USER_ID: company1
-      DEFAULT_USER_FULL_NAME: Company 1
-      DEFAULT_USER_EMAIL: admin@company1.local
+      DEFAULT_USER_ID: company-forest-owner-a
+      DEFAULT_USER_FULL_NAME: Company forest owner a
+      DEFAULT_USER_EMAIL: admin@company-forest-owner-a.local
       DEFAULT_USER_TENANT_ID: default
       DEFAULT_USER_ROLES: admin
     configs:
       - source: portal_config_js
         target: /app/public/config.js
     depends_on:
-      edc-provider:
+      forest-owner-a:
         condition: service_healthy
         restart: true
+#    networks:
+#      - connector-example-network
       
 
   portal-consumer:
@@ -139,19 +235,45 @@ services:
     ports:
       - "8086:8086"
     environment:
-      EDC_URL: http://edc-consumer:19193/management
-      FEDERATED_CATALOG_URL: http://edc-consumer:19199/catalog
+      EDC_URL: http://forest-owner-b:29193/management
+      FEDERATED_CATALOG_URL: http://forest-owner-b:29199/catalog
       PORT: 8086
-      DEFAULT_USER_ID: company2
-      DEFAULT_USER_FULL_NAME: Company 2
-      DEFAULT_USER_EMAIL: admin@company2.local
+      DEFAULT_USER_ID: company-forest-owner-b
+      DEFAULT_USER_FULL_NAME: Company forest owner b
+      DEFAULT_USER_EMAIL: admin@company-forest-owner-b.local
       DEFAULT_USER_TENANT_ID: default
       DEFAULT_USER_ROLES: admin
     configs:
       - source: portal_config_js
         target: /app/public/config.js
     depends_on:
-      edc-consumer:
+      forest-owner-b:
+        condition: service_healthy
+        restart: true
+#    networks:
+#      - connector-example-network
+
+
+
+
+  portal-researcher:
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
+    ports:
+      - "8087:8087"
+    environment:
+      EDC_URL: http://forest-inventory-researcher:39193/management
+      FEDERATED_CATALOG_URL: http://forest-inventory-researcher:39199/catalog
+      PORT: 8087
+      DEFAULT_USER_ID: company-forest-inventory-researcher
+      DEFAULT_USER_FULL_NAME: Company forest inventory researcher
+      DEFAULT_USER_EMAIL: admin@company-forest-inventory-researcher.local
+      DEFAULT_USER_TENANT_ID: default
+      DEFAULT_USER_ROLES: admin
+    configs:
+      - source: portal_config_js
+        target: /app/public/config.js
+    depends_on:
+      forest-owner-b:
         condition: service_healthy
         restart: true
 
@@ -168,10 +290,12 @@ services:
       - source: postgres_init_sql
         target: /docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U user"]
       interval: 30s
       timeout: 10s
       retries: 5
+#    networks:
+#      - connector-example-network
 
   keycloak:
     image: bitnami/keycloak:23.0.3
@@ -195,6 +319,8 @@ services:
       postgres:
         condition: service_healthy
         restart: true
+#    networks:
+#      - connector-example-network
 
   geodata:
     image: nginx
@@ -206,28 +332,75 @@ services:
       - source: geodata_nginx_config
         target: /etc/nginx/nginx.conf
     restart: always
+#    networks:
+#      - connector-example-network
 
-  import-edc-provider-data:
+  import-forest-owner-a-data:
     image: alpine/curl
     volumes:
       - ./initialization/init.sh:/scripts/init.sh
     working_dir: /scripts
     environment:
-      - EDC_BASE_URL=http://edc-provider:19193
+      - EDC_BASE_URL=http://forest-owner-a:19193
     command: /scripts/init.sh
     depends_on:
-      edc-provider:
+      forest-owner-a:
         condition: service_healthy
         restart: true
-      edc-consumer:
+      forest-owner-b:
         condition: service_healthy
         restart: true
+      forest-inventory-researcher:
+        condition: service_healthy
+        restart: true
+#    networks:
+#      - connector-example-network
+
+#  edc-swagger-ui:
+#    image: edc-swagger-ui
+#    container_name: edc-swagger-ui
+#    ports:
+#        - "8081:80"
+#    networks:
+#      - connector-example-network
+
+#networks:
+#  connector-example-network:
+#    driver: bridge
+
+
+#  mitm:
+#    image: mitmproxy/mitmproxy:latest
+#    command: |
+#      mitmweb
+#      --web-host 0.0.0.0
+#      --web-port 9081
+#      --set web_password='edc-mitm'
+#      --mode reverse:http://edc-provider:19291@39291
+#      --mode reverse:http://edc-provider:19193@39193
+#      --mode reverse:http://edc-provider:19194@39194
+#      --mode reverse:http://edc-provider:19199@39199
+#      --mode reverse:http://edc-consumer:29291@49291
+#      --mode reverse:http://edc-consumer:29193@49193
+#      --mode reverse:http://edc-consumer:29194@49194
+#      --mode reverse:http://edc-consumer:29199@49199
+#    ports:
+#      - "9081:9081"
+#      - "39291:39291"
+#      - "39193:39193"
+#      - "39194:39194"
+#      - "39199:39199"
+#      - "49291:49291"
+#      - "49193:49193"
+#      - "49194:49194"
+#      - "49199:49199"
 
 configs:
   postgres_init_sql:
     content: |
-      CREATE SCHEMA IF NOT EXISTS consumer;
-      CREATE SCHEMA IF NOT EXISTS provider;
+      CREATE SCHEMA IF NOT EXISTS forestownera;
+      CREATE SCHEMA IF NOT EXISTS forestownerb;
+      CREATE SCHEMA IF NOT EXISTS inventoryresearcher;
   portal_config_js:
     content: |
       var config = {
