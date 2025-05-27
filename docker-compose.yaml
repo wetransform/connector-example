@@ -141,7 +141,7 @@ services:
     image: wetransform/connector:latest
     ports:
       - 39191:39191 # health check
-      # - 19192:19192
+      # - 29192:19192
       - 39193:39193 # management endpoint
       - 39194:39194 # ds protocol (normaly forwarded, but edcs are in same network)
       - 39291:39291 # public endpoint
@@ -166,9 +166,9 @@ services:
       EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS: public-key
       WEB_HTTP_PUBLIC_PORT: 39291
       WEB_HTTP_PUBLIC_PATH: /public
-      WEB_HTTP_CONTROL_PORT: 39192
+      WEB_HTTP_CONTROL_PORT: 49192
       WEB_HTTP_CONTROL_PATH: /control
-      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=inventoryresearcher
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownerc
       EDC_DATASOURCE_DEFAULT_USER: user
       EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
       EDC_SQL_SCHEMA_AUTOCREATE: true
@@ -189,14 +189,8 @@ services:
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
       EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
-      LOGGING_LEVEL_ORG_ECLIPSE_EDC: DEBUG
-    #      EDC_WEB_CORS_ENABLED: true
-    #      EDC_WEB_CORS_ALLOWED_ORIGINS: http://localhost:8081
-    #      EDC_WEB_CORS_ALLOWED_METHODS: GET,POST,OPTIONS
-    #      EDC_WEB_CORS_ALLOWED_HEADERS: Authorization,Content-Type,X-Api-Key
-
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:59191/api/check/health" ]
+      test: ["CMD", "curl", "-f", "http://localhost:39191/api/check/health"]
       interval: 20s
       timeout: 20s
       retries: 5
@@ -204,7 +198,8 @@ services:
       keycloak:
         condition: service_healthy
         restart: true
-
+  #    networks:
+  #      - connector-example-network
 
   portal-provider:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -256,7 +251,7 @@ services:
 
 
 
-  portal-researcher:
+  portal-forest-inventory-researcher:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
     ports:
       - "8087:8087"
@@ -265,7 +260,7 @@ services:
       FEDERATED_CATALOG_URL: http://forest-inventory-researcher:39199/catalog
       PORT: 8087
       DEFAULT_USER_ID: company-forest-inventory-researcher
-      DEFAULT_USER_FULL_NAME: Company forest inventory researcher
+      DEFAULT_USER_FULL_NAME: Company forest-inventory-researcher
       DEFAULT_USER_EMAIL: admin@company-forest-inventory-researcher.local
       DEFAULT_USER_TENANT_ID: default
       DEFAULT_USER_ROLES: admin
@@ -273,7 +268,7 @@ services:
       - source: portal_config_js
         target: /app/public/config.js
     depends_on:
-      forest-owner-b:
+      forest-inventory-researcher:
         condition: service_healthy
         restart: true
 
@@ -400,6 +395,7 @@ configs:
     content: |
       CREATE SCHEMA IF NOT EXISTS forestownera;
       CREATE SCHEMA IF NOT EXISTS forestownerb;
+      CREATE SCHEMA IF NOT EXISTS forestownerc;
       CREATE SCHEMA IF NOT EXISTS inventoryresearcher;
   portal_config_js:
     content: |
