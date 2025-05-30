@@ -171,7 +171,7 @@ services:
       WEB_HTTP_PUBLIC_PATH: /public
       WEB_HTTP_CONTROL_PORT: 49192
       WEB_HTTP_CONTROL_PATH: /control
-      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownerb
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownerc
       EDC_DATASOURCE_DEFAULT_USER: user
       EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
       EDC_SQL_SCHEMA_AUTOCREATE: true
