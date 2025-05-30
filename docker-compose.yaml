@@ -53,8 +53,6 @@ services:
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
       EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
-      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
-      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
 #      EDC_WEB_CORS_ENABLED: true
 #      EDC_WEB_CORS_ALLOWED_ORIGINS: http://localhost:8081
 #      EDC_WEB_CORS_ALLOWED_METHODS: GET,POST,OPTIONS
@@ -69,8 +67,6 @@ services:
       keycloak:
         condition: service_healthy
         restart: true
-#    networks:
-#      - connector-example-network
 
   forest-owner-b:
 #    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
@@ -125,8 +121,6 @@ services:
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
       EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
-      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
-      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:29191/api/check/health"]
       interval: 20s
@@ -136,8 +130,7 @@ services:
       keycloak:
         condition: service_healthy
         restart: true
-#    networks:
-#      - connector-example-network
+
 
   forest-owner-c:
     #    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
@@ -192,8 +185,6 @@ services:
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
       EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
-      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
-      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:49191/api/check/health" ]
       interval: 20s
@@ -203,8 +194,6 @@ services:
       keycloak:
         condition: service_healthy
         restart: true
-  #    networks:
-  #      - connector-example-network
 
   forest-inventory-researcher:
     #    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
@@ -259,8 +248,6 @@ services:
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
       EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
-      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
-      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:39191/api/check/health"]
       interval: 20s
@@ -270,8 +257,6 @@ services:
       keycloak:
         condition: service_healthy
         restart: true
-  #    networks:
-  #      - connector-example-network
 
   portal-provider:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -293,9 +278,6 @@ services:
       forest-owner-a:
         condition: service_healthy
         restart: true
-#    networks:
-#      - connector-example-network
-      
 
   portal-consumer:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -317,10 +299,6 @@ services:
       forest-owner-b:
         condition: service_healthy
         restart: true
-#    networks:
-#      - connector-example-network
-
-
 
   portal-forest-owner-c:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -342,8 +320,6 @@ services:
       forest-owner-c:
         condition: service_healthy
         restart: true
-  #    networks:
-
 
   portal-forest-inventory-researcher:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -383,8 +359,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-#    networks:
-#      - connector-example-network
 
   keycloak:
     image: bitnami/keycloak:23.0.3
@@ -398,7 +372,6 @@ services:
       - KEYCLOAK_ENABLE_HEALTH_ENDPOINTS=true
     volumes:
       - ./keycloak/realm-export-dataspace.json:/opt/bitnami/keycloak/data/import/dataspace-realm.json
-#      - ./keycloak/schema-fix.sql:/docker-entrypoint-initdb.d/schema-fix.sql
     healthcheck:
         test: ["CMD-SHELL", "curl --fail http://localhost:8080/realms/dataspace/.well-known/openid-configuration"]
         interval: 30s
@@ -409,8 +382,6 @@ services:
       postgres:
         condition: service_healthy
         restart: true
-#    networks:
-#      - connector-example-network
 
   geodata:
     image: nginx
@@ -422,8 +393,6 @@ services:
       - source: geodata_nginx_config
         target: /etc/nginx/nginx.conf
     restart: always
-#    networks:
-#      - connector-example-network
 
   import-forest-owner-a-data:
     image: alpine/curl
@@ -447,47 +416,6 @@ services:
       forest-inventory-researcher:
         condition: service_healthy
         restart: true
-#    networks:
-#      - connector-example-network
-
-#  edc-swagger-ui:
-#    image: edc-swagger-ui
-#    container_name: edc-swagger-ui
-#    ports:
-#        - "8081:80"
-#    networks:
-#      - connector-example-network
-
-#networks:
-#  connector-example-network:
-#    driver: bridge
-
-
-#  mitm:
-#    image: mitmproxy/mitmproxy:latest
-#    command: |
-#      mitmweb
-#      --web-host 0.0.0.0
-#      --web-port 9081
-#      --set web_password='edc-mitm'
-#      --mode reverse:http://edc-provider:19291@39291
-#      --mode reverse:http://edc-provider:19193@39193
-#      --mode reverse:http://edc-provider:19194@39194
-#      --mode reverse:http://edc-provider:19199@39199
-#      --mode reverse:http://edc-consumer:29291@49291
-#      --mode reverse:http://edc-consumer:29193@49193
-#      --mode reverse:http://edc-consumer:29194@49194
-#      --mode reverse:http://edc-consumer:29199@49199
-#    ports:
-#      - "9081:9081"
-#      - "39291:39291"
-#      - "39193:39193"
-#      - "39194:39194"
-#      - "39199:39199"
-#      - "49291:49291"
-#      - "49193:49193"
-#      - "49194:49194"
-#      - "49199:49199"
 
 configs:
   postgres_init_sql:
