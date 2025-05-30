@@ -258,6 +258,7 @@
         "attributes" : { }
       } ],
       "forest-owner-b" : [ ],
+      "forest-owner-c" : [ ],
       "forest-inventory-researcher" : [ ],
       "account" : [ {
         "id" : "0a70a57d-bcda-44b9-840a-19b60d6d0ffd",
@@ -343,6 +344,7 @@
     "attributes" : {
       "wetransform_role" : [ "forest-data-holder" ],
       "country" : [ "DE" ],
+      "geofence" : [ "POLYGON((8.613952635937485 48.418309433662444,9.122070311718735 48.60753466670802,8.564514159374985 48.95141093722579,8.169006346874985 48.74717897343768,8.613952635937485 48.418309433662444))" ],
       "participant_id" : [ "company-forest-owner-a" ]
     }
   }, {
@@ -352,8 +354,17 @@
     "attributes" : {
       "wetransform_role" : [ "forest-data-holder" ],
       "country" : [ "DE" ],
-      "geometry" : [ "POLYGON((10 50, 15 50, 15 55, 10 55, 10 50))" ],
+      "geofence" : [ "POLYGON((8.949771021482134 48.44385399087058,8.290591333982134 48.71822443086192,7.9994536386696335 48.42380852915195,8.617434595700884 48.1972942735183,8.949771021482134 48.44385399087058))" ],
       "participant_id" : [ "company-forest-owner-b" ]
+    }
+  }, {
+    "id" : "af78c79d-d3e7-4a14-8020-b9c412085a56",
+    "name" : "EDC-company-forest-owner-c",
+    "path" : "/EDC-company-forest-owner-c",
+    "attributes" : {
+      "wetransform_role" : [ "forest-data-holder" ],
+      "country" : [ "DE" ],
+      "participant_id" : [ "company-forest-owner-c" ]
     }
   },{
     "id" : "af78c79d-d3e7-4a14-8020-b9c413085a57",
@@ -362,7 +373,6 @@
     "attributes" : {
       "wetransform_role" : [ "researcher" ],
       "country" : [ "DE" ],
-      "geometry" : [ "POLYGON((10 50, 15 50, 15 55, 10 55, 10 50))" ],
       "participant_id" : [ "company-forest-inventory-researcher" ]
     }
   }],
@@ -420,6 +430,20 @@
     "realmRoles" : [ "default-roles-dataspace" ],
     "notBefore" : 0,
     "groups" : [ "/EDC-company-forest-owner-b" ]
+  },{
+    "id" : "2dc2bc2d-9a8e-48be-b867-ae4aac33cc4e",
+    "createdTimestamp" : 1714401790637,
+    "username" : "service-account-forest-owner-c",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "serviceAccountClientId" : "forest-owner-c",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-dataspace" ],
+    "notBefore" : 0,
+    "groups" : [ "/EDC-company-forest-owner-c" ]
   },{
     "id" : "2dc2bc2d-9a8e-48be-b867-ae7aac33cc4a",
     "createdTimestamp" : 1714401790637,
@@ -660,17 +684,17 @@
       }
     }, {
       "id" : "8d3c63a8-90cd-48ad-8237-6ef971e48c41",
-      "name" : "geometry",
+      "name" : "geofence",
       "protocol" : "openid-connect",
       "protocolMapper" : "oidc-usermodel-attribute-mapper",
       "consentRequired" : false,
       "config" : {
         "introspection.token.claim" : "true",
         "userinfo.token.claim" : "true",
-        "user.attribute" : "geometry",
+        "user.attribute" : "geofence",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
-        "claim.name" : "geometry",
+        "claim.name" : "geofence",
         "jsonType.label" : "String"
       }
     }, {
@@ -872,17 +896,17 @@
       }
     }, {
       "id" : "e1e2367b-3398-40d5-907b-1157880a379c",
-      "name" : "geometry",
+      "name" : "geofence",
       "protocol" : "openid-connect",
       "protocolMapper" : "oidc-usermodel-attribute-mapper",
       "consentRequired" : false,
       "config" : {
         "introspection.token.claim" : "true",
         "userinfo.token.claim" : "true",
-        "user.attribute" : "geometry",
+        "user.attribute" : "geofence",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
-        "claim.name" : "geometry",
+        "claim.name" : "geofence",
         "jsonType.label" : "String"
       }
     }, {
@@ -930,6 +954,187 @@
       }
     }, {
       "id" : "2b794aaa-8d28-4bd6-88b6-c53405f66c39",
+      "name" : "Client ID",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.session.note" : "client_id",
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "client_id",
+        "jsonType.label" : "String"
+      }
+    } ],
+    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+  },{
+    "id" : "78fbd215-22a3-40fb-98b8-dc99f97cb871",
+    "clientId" : "forest-owner-c",
+    "name" : "EDC Consumer company-forest-owner-c",
+    "description" : "",
+    "rootUrl" : "",
+    "adminUrl" : "",
+    "baseUrl" : "",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "alwaysDisplayInConsole" : false,
+    "clientAuthenticatorType" : "client-jwt",
+    "secret" : "**********",
+    "redirectUris" : [ "/*" ],
+    "webOrigins" : [ "/*" ],
+    "notBefore" : 0,
+    "bearerOnly" : false,
+    "consentRequired" : false,
+    "standardFlowEnabled" : false,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : false,
+    "serviceAccountsEnabled" : true,
+    "publicClient" : false,
+    "frontchannelLogout" : true,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "client.secret.creation.time" : "1714055892",
+      "post.logout.redirect.uris" : "+",
+      "oauth2.device.authorization.grant.enabled" : "false",
+      "backchannel.logout.revoke.offline.tokens" : "false",
+      "use.refresh.tokens" : "true",
+      "jwt.credential.certificate" : "MIIDazCCAlOgAwIBAgIUZ3/sZXYzW4PjmOXKrZn6WBmUJ+4wDQYJKoZIhvcNAQELBQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAeFw0yMjAyMjMxNTA2MDNaFw0zMjAyMjExNTA2MDNaMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDBl6XaJnXTL+6DWip3aBhU+MzmY4d1V9hbTm1tiZ3gE0VbUrvGO3LoYaxpPv6zFmsg3uJv6JxVAde7EddidN0ITHB9cQNdAfdUJ5njmsGSPbdQuOQTHw0aG7/QvTI/nsvfEE6e0lbV/0e7DHacZT/+OztBH1RwkG2ymM94Hf8HI6x7q6yfRTAZOqeOMrPCYTcluAgE9NskoPvjX5qASakBtXISKIsOU84N0/2HDN3WEGMXvoHUQu6vrij6BwiwxKaw1AKwWENKoga775bPXN3M+JTSaIKE7dZbKzvx0Zi0h5X+bxc3BJi3Z/CsUBCzE+Y0SFetOiYmyl/2YmnneYoVAgMBAAGjUzBRMB0GA1UdDgQWBBTvK1wVERwjni4B2vdH7KtEJeVWFzAfBgNVHSMEGDAWgBTvK1wVERwjni4B2vdH7KtEJeVWFzAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQBnQHiPA7OBYukHd9gS7c0HXE+fsWcS3GZeLqcHfQQnV3pte1vTmu9//IVW71wNCJ1/rySRyODPQoPehxEcyHwupNZSzXK//nPlTdSgjMfFxscvt1YndyQLQYCfyOJMixAeAqrb14GTFHUUrdor0PyElhkULjkOXUrSIsdBrfWrwLTkelE8NK3tb5ZG8KPzD9Jy+NwEPPr9d+iHkUkM7EFWw/cl56wka9ryBb97RI7DqbO6/j6OXHMk4GByxKv7DSIRIvF9/Dw20qytajtaHV0pluFcOBuFc0NfiDvCaQlbTsfjzbc6UmZWbOi9YOJl3VQ/g3h+15GuzbsSzOCOEYOT",
+      "oidc.ciba.grant.enabled" : "false",
+      "backchannel.logout.session.required" : "true",
+      "client_credentials.use_refresh_token" : "false",
+      "tls.client.certificate.bound.access.tokens" : "false",
+      "require.pushed.authorization.requests" : "false",
+      "acr.loa.map" : "{}",
+      "display.on.consent.screen" : "false",
+      "token.response.type.bearer.lower-case" : "false"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : true,
+    "nodeReRegistrationTimeout" : -1,
+    "protocolMappers" : [ {
+      "id" : "50990a0c-8e64-459d-80a1-c76fd2a53abd",
+      "name" : "notbefore",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-hardcoded-claim-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "introspection.token.claim" : "true",
+        "claim.value" : "1714143783",
+        "userinfo.token.claim" : "true",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "nbf",
+        "jsonType.label" : "int",
+        "access.tokenResponse.claim" : "false"
+      }
+    }, {
+      "id" : "1e90a009-5a9e-40a7-b26e-48b15fbcc010",
+      "name" : "edc country",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "user.attribute" : "country",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "country",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "6f8a7ab2-4e6a-491f-97df-e358e7d74e40",
+      "name" : "Client IP Address",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.session.note" : "clientAddress",
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "clientAddress",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "c0736c68-bf57-4717-b920-388473634b4a",
+      "name" : "Client Host",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.session.note" : "clientHost",
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "clientHost",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "e1e2367b-3398-40d5-907b-2157880a379c",
+      "name" : "geofence",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "user.attribute" : "geofence",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "geofence",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "487ad793-2dbc-4f26-9184-ra2cac32007a",
+      "name" : "participant id",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "user.attribute" : "participant_id",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "participant_id",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "8dd13b06-0845-4275-a136-t042d9a60a70",
+      "name" : "edc audience",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-audience-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "id.token.claim" : "false",
+        "access.token.claim" : "true",
+        "introspection.token.claim" : "true",
+        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "userinfo.token.claim" : "false"
+      }
+    }, {
+      "id" : "fc9050f3-a6d8-4ba6-9495-57dd5bc2815a",
+      "name" : "wetransform_role",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usermodel-attribute-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "introspection.token.claim" : "true",
+        "userinfo.token.claim" : "true",
+        "user.attribute" : "wetransform_role",
+        "id.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "wetransform_role",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "2b794aaa-8d28-4bd6-88b6-d53405f66c39",
       "name" : "Client ID",
       "protocol" : "openid-connect",
       "protocolMapper" : "oidc-usersessionmodel-note-mapper",
@@ -1053,17 +1258,17 @@
       }
     }, {
       "id" : "e1e2367b-3398-40d5-907b-1157880a379d",
-      "name" : "geometry",
+      "name" : "geofence",
       "protocol" : "openid-connect",
       "protocolMapper" : "oidc-usermodel-attribute-mapper",
       "consentRequired" : false,
       "config" : {
         "introspection.token.claim" : "true",
         "userinfo.token.claim" : "true",
-        "user.attribute" : "geometry",
+        "user.attribute" : "geofence",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
-        "claim.name" : "geometry",
+        "claim.name" : "geofence",
         "jsonType.label" : "String"
       }
     }, {

@@ -52,7 +52,9 @@ services:
       EDC_API_AUTH_TYPE: oauth2
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
-      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
+      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
+      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
 #      EDC_WEB_CORS_ENABLED: true
 #      EDC_WEB_CORS_ALLOWED_ORIGINS: http://localhost:8081
 #      EDC_WEB_CORS_ALLOWED_METHODS: GET,POST,OPTIONS
@@ -122,7 +124,9 @@ services:
       EDC_API_AUTH_TYPE: oauth2
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
-      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
+      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
+      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:29191/api/check/health"]
       interval: 20s
@@ -135,6 +139,72 @@ services:
 #    networks:
 #      - connector-example-network
 
+  forest-owner-c:
+    #    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
+    image: wetransform/connector:latest
+    ports:
+      - 49191:49191 # health check
+      # - 29192:19192
+      - 49193:49193 # management endpoint
+      - 49194:49194 # ds protocol (normaly forwarded, but edcs are in same network)
+      - 49291:49291 # public endpoint
+      - 49199:49199 # federated catalog endpoint
+    volumes:
+      - ./edc/vault.properties:/resources/vault.properties
+      - ./edc/nodes.properties:/resources/nodes.properties
+    environment:
+      EDC_VAULT_FILE_PATH: /resources/vault.properties
+      EDC_DSP_CALLBACK_ADDRESS: http://forest-owner-c:49194/protocol
+      EDC_DATAPLANE_API_PUBLIC_BASEURL: http://forest-owner-c:49291/public
+      WEB_HTTP_PORT: 49191
+      WEB_HTTP_PATH: /api
+      WEB_HTTP_MANAGEMENT_PORT: 49193
+      WEB_HTTP_MANAGEMENT_PATH: /management
+      WEB_HTTP_PROTOCOL_PORT: 49194
+      WEB_HTTP_PROTOCOL_PATH: /protocol
+      WEB_HTTP_CATALOG_PORT: 49199
+      WEB_HTTP_CATALOG_PATH: /catalog
+      EDC_PUBLIC_KEY_ALIAS: public-key
+      EDC_TRANSFER_PROXY_TOKEN_SIGNER_PRIVATEKEY_ALIAS: private-key
+      EDC_TRANSFER_PROXY_TOKEN_VERIFIER_PUBLICKEY_ALIAS: public-key
+      WEB_HTTP_PUBLIC_PORT: 49291
+      WEB_HTTP_PUBLIC_PATH: /public
+      WEB_HTTP_CONTROL_PORT: 49192
+      WEB_HTTP_CONTROL_PATH: /control
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownerb
+      EDC_DATASOURCE_DEFAULT_USER: user
+      EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
+      EDC_SQL_SCHEMA_AUTOCREATE: true
+      EDC_OAUTH_TOKEN_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/token
+      EDC_OAUTH_PROVIDER_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH_CERTIFICATE_ALIAS: public-key
+      EDC_OAUTH_PRIVATE_KEY_ALIAS: private-key
+      EDC_OAUTH_CLIENT_ID: forest-owner-c
+      EDC_OAUTH_PROVIDER_AUDIENCE: http://keycloak:8080/realms/dataspace
+      EDC_OAUTH_VALIDATION_NBF_LEEWAY: 20
+      EDC_OAUTH_VALIDATION_ISSUED_AT_LEEWAY: 5
+      EDC_AGENT_IDENTITY_KEY: participant_id
+      EDC_PARTICIPANT_ID: company-forest-owner-c
+      EDC_NODES_FILE_PATH: /resources/nodes.properties
+      EDC_OAUTH2_JWKS_URL: http://keycloak:8080/realms/dataspace/protocol/openid-connect/certs
+      EDC_OAUTH2_ISSUER: http://keycloak:8080/realms/dataspace
+      EDC_API_AUTH_TYPE: oauth2
+      EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
+      EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
+      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
+      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:49191/api/check/health" ]
+      interval: 20s
+      timeout: 20s
+      retries: 5
+    depends_on:
+      keycloak:
+        condition: service_healthy
+        restart: true
+  #    networks:
+  #      - connector-example-network
 
   forest-inventory-researcher:
     #    image: ghcr.io/connected-intelligent-systems/connector:v0.10.0
@@ -168,7 +238,7 @@ services:
       WEB_HTTP_PUBLIC_PATH: /public
       WEB_HTTP_CONTROL_PORT: 49192
       WEB_HTTP_CONTROL_PATH: /control
-      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=forestownerc
+      EDC_DATASOURCE_DEFAULT_URL: jdbc:postgresql://postgres:5432/dataspace?currentSchema=inventoryresearcher
       EDC_DATASOURCE_DEFAULT_USER: user
       EDC_DATASOURCE_DEFAULT_PASSWORD: postgres
       EDC_SQL_SCHEMA_AUTOCREATE: true
@@ -188,7 +258,9 @@ services:
       EDC_API_AUTH_TYPE: oauth2
       EDC_WEB_HTTP_AUTHENTICATION_TYPE: oauth2
       EDC_OAUTH_CLAIMS_PARTICIPANT_ROLE: wetransform_role
-      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geometry
+      EDC_OAUTH_CLAIMS_PARTICIPANT_GEOFENCE: geofence
+      EDC_DATAPLANE_ALLOWED_SOURCE_TYPES: File,HttpData,AmazonS3,HttpProxy
+      EDC_DATAPLANE_ALLOWED_DEST_TYPES: HttpData,HttpProxy,File,AmazonS3
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:39191/api/check/health"]
       interval: 20s
@@ -250,6 +322,28 @@ services:
 
 
 
+  portal-forest-owner-c:
+    image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
+    ports:
+      - "8089:8089"
+    environment:
+      EDC_URL: http://forest-owner-c:49193/management
+      FEDERATED_CATALOG_URL: http://forest-owner-c:49199/catalog
+      PORT: 8089
+      DEFAULT_USER_ID: company-forest-owner-c
+      DEFAULT_USER_FULL_NAME: Company forest owner c
+      DEFAULT_USER_EMAIL: admin@company-forest-owner-c.local
+      DEFAULT_USER_TENANT_ID: default
+      DEFAULT_USER_ROLES: admin
+    configs:
+      - source: portal_config_js
+        target: /app/public/config.js
+    depends_on:
+      forest-owner-c:
+        condition: service_healthy
+        restart: true
+  #    networks:
+
 
   portal-forest-inventory-researcher:
     image: ghcr.io/connected-intelligent-systems/portal:ingeodtm-demo-1
@@ -304,6 +398,7 @@ services:
       - KEYCLOAK_ENABLE_HEALTH_ENDPOINTS=true
     volumes:
       - ./keycloak/realm-export-dataspace.json:/opt/bitnami/keycloak/data/import/dataspace-realm.json
+#      - ./keycloak/schema-fix.sql:/docker-entrypoint-initdb.d/schema-fix.sql
     healthcheck:
         test: ["CMD-SHELL", "curl --fail http://localhost:8080/realms/dataspace/.well-known/openid-configuration"]
         interval: 30s
@@ -334,6 +429,7 @@ services:
     image: alpine/curl
     volumes:
       - ./initialization/init.sh:/scripts/init.sh
+      - ./initialization/minifix.geojson.json:/data
     working_dir: /scripts
     environment:
       - EDC_BASE_URL=http://forest-owner-a:19193
@@ -343,6 +439,9 @@ services:
         condition: service_healthy
         restart: true
       forest-owner-b:
+        condition: service_healthy
+        restart: true
+      forest-owner-c:
         condition: service_healthy
         restart: true
       forest-inventory-researcher:
