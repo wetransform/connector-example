@@ -105,7 +105,7 @@ create_policy() {
                             "@id": "edc:wetransform_role"
                         },
                         "odrl:operator": {
-                            "@id": "odrl:isPartOf"
+                            "@id": "odrl:eq"
                         },
                         "odrl:rightOperand": "'"$role"'"
                     }
@@ -122,7 +122,7 @@ create_policy() {
                             "@id": "edc:geofence"
                         },
                         "odrl:operator": {
-                            "@id": "odrl:eq"
+                            "@id": "odrl:isPartOf"
                         },
                         "odrl:rightOperand": {
                             "@value": "'"$geofence"'"
@@ -214,7 +214,7 @@ ASSET_COUNT=3
 
 ASSET_ID_1="77e9fbfd-7e9a-4254-96c7-d06595728402"
 ASSET_NAME_1="Asset for Forest owner a"
-ASSET_URL_1="http://geodata/countries.geojson"
+ASSET_URL_1="https://test.haleconnect.de/ows/datasets/org.531.b5f5904a-ac54-4fe2-b6e5-aa7699b094dc_ogcapi/collections"
 ASSET_DESCRIPTION_1="Tolle Description hier"
 ASSET_ACTIVE_1=true
 POLICY_ID_1="7f09aa3f-9cb6-437a-b29e-3281601bdad7"
@@ -227,7 +227,7 @@ CONTRACT_NAME_1="Contract for Forest owner a or any super set"
 
 ASSET_ID_2="554468b1-f28b-4c1c-990c-d2dab2f2a432"
 ASSET_NAME_2="Asset for Owner b"
-ASSET_URL_2="http://geodata/Windenergieanlagen_KreisGT_EPSG3857_GEOJSON.geojson"
+ASSET_URL_2="https://test.haleconnect.de/ows/datasets/org.762.6955d69f-5e3a-446c-98cb-0c3b6ae119fd_ogcapi"
 ASSET_DESCRIPTION_2="Should only be accessible to forest owner b"
 ASSET_ACTIVE_2=true
 POLICY_ID_2="de35267a-f4f4-4cea-a994-3741fd02ac71"
