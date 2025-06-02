@@ -31,9 +31,10 @@ services:
 
   mitm:
     image: mitmproxy/mitmproxy:latest
-    command: mitmweb --web-host 0.0.0.0 --web-port 9081 --set web_password='edc-mitm' --mode reverse:http://host.docker.internal:19291@39291 --mode reverse:http://host.docker.internal:19193@39193 --mode reverse:http://host.docker.internal:19194@39194 --mode reverse:http://host.docker.internal:19199@39199 --mode reverse:http://host.docker.internal:29291@49291 --mode reverse:http://host.docker.internal:29193@49193 --mode reverse:http://host.docker.internal:29194@49194 --mode reverse:http://host.docker.internal:29199@49199
+    command: mitmweb --web-host 0.0.0.0 --web-port 9081 --set web_password='edc-mitm' --mode reverse:http://host.docker.internal:19291@39291 --mode reverse:http://host.docker.internal:19193@39193 --mode reverse:http://host.docker.internal:19194@39194 --mode reverse:http://host.docker.internal:19199@39199 --mode reverse:http://host.docker.internal:29291@49291 --mode reverse:http://host.docker.internal:29193@49193 --mode reverse:http://host.docker.internal:29194@49194 --mode reverse:http://host.docker.internal:29199@49199 --mode reverse:http://host.docker.internal:7080@8080
     ports:
       - "9081:9081"
+      - "8080:8080"
       - "39291:39291"
       - "39193:39193"
       - "39194:39194"
@@ -47,7 +48,7 @@ services:
   keycloak:
     image: bitnami/keycloak:23.0.3
     ports:
-      - "8080:8080"
+      - "7080:8080"
     environment:
       - KEYCLOAK_DATABASE_VENDOR=dev-file
       - KEYCLOAK_ADMIN_USER=admin
