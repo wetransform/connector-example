@@ -364,6 +364,7 @@
     "attributes" : {
       "wetransform_role" : [ "forest-data-holder" ],
       "country" : [ "DE" ],
+      "geofence" : [ "POLYGON ((-25.0 34.0, -25.0 72.0, 45.0 72.0, 45.0 34.0, -25.0 34.0))" ],
       "participant_id" : [ "company-forest-owner-c" ]
     }
   },{
@@ -768,7 +769,7 @@
         "id.token.claim" : "false",
         "access.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "included.custom.audience" : "http://host.docker.internal:8080/realms/dataspace",
         "userinfo.token.claim" : "false"
       }
     }, {
@@ -934,7 +935,7 @@
         "id.token.claim" : "false",
         "access.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "included.custom.audience" : "http://host.docker.internal:8080/realms/dataspace",
         "userinfo.token.claim" : "false"
       }
     }, {
@@ -1115,7 +1116,7 @@
         "id.token.claim" : "false",
         "access.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "included.custom.audience" : "http://host.docker.internal:8080/realms/dataspace",
         "userinfo.token.claim" : "false"
       }
     }, {
@@ -1296,7 +1297,7 @@
         "id.token.claim" : "false",
         "access.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "included.custom.audience" : "http://keycloak:8080/realms/dataspace",
+        "included.custom.audience" : "http://host.docker.internal:8080/realms/dataspace",
         "userinfo.token.claim" : "false"
       }
     }, {
@@ -2566,6 +2567,7 @@
   "clientAuthenticationFlow" : "clients",
   "dockerAuthenticationFlow" : "docker auth",
   "attributes" : {
+    "frontendUrl": "http://host.docker.internal:8080",
     "cibaBackchannelTokenDeliveryMode" : "poll",
     "cibaExpiresIn" : "120",
     "cibaAuthRequestedUserHint" : "login_hint",

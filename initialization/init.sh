@@ -240,7 +240,7 @@ CONTRACT_NAME_2="Contract for Forest owner 2 or any super set"
 
 ASSET_ID_3="554468b1-f38b-4c1c-990c-d2dab2f2a432"
 ASSET_NAME_3="Asset for Non-EU"
-ASSET_URL_3="http://geodata/Windenergieanlagen_KreisGT_EPSG3857_GEOJSON.geojson"
+ASSET_URL_3="http://host.docker.internal:8088/Windenergieanlagen_KreisGT_EPSG3857_GEOJSON.geojson"
 ASSET_DESCRIPTION_3="Should only be accessible to participant with geometry outside of EU or to researchers"
 ASSET_ACTIVE_3=true
 POLICY_ID_3="de35267a-f4e4-4cea-a994-3741fd02ac71"
@@ -272,7 +272,7 @@ done
 
 ASSET_ID_4="554468b1-f28b-4c1c-990c-d2dab2f2a435"
 ASSET_NAME_4="Open asset"
-ASSET_URL_4="http://geodata/countries.geojson"
+ASSET_URL_4="http://host.docker.internal:8088/countries.geojson"
 ASSET_DESCRIPTION_4="Asset with no geometry or role restriction"
 ASSET_ACTIVE_4=true
 POLICY_ID_4="de35267a-f4f4-4cea-a994-3741fd04ac71"
